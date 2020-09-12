@@ -12,5 +12,3 @@ After the database configuration you just have to run the Dockerfile or use:
 
 To view the documentation type in the terminal
 ```npx serve```
-
-
