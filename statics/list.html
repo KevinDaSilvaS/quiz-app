@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="../favicon.ico">
+    <title>list</title>
+</head>
+<body>
+    <div id="list">
+        
+    </div>
+    <div id="quizTab">
+        
+    </div>
+    <script>
+        let content;
+        let elem = `<ul>`
+
+        const buildList = () => {
+            fetch("http://localhost:4738/votings/", {
+            "method": "GET"
+            })
+            .then( response => response.json())
+            .then(response => {
+                content = response.list;
+
+                content.forEach((item, index) => {
+                    elem += `<li onclick="showQuizTab(${index})">${item.question}</li>`
+                })
+                elem += `</ul>`
+                document.getElementById('list').innerHTML = elem;
+            })
+            .catch(err => console.error(err));
+        }
+        
+        buildList();
+    </script>
+
+    <script>
+        const showQuizTab = (index) => {
+            const { question, options} = content[index];
+            const quizTab = document.getElementById('quizTab');
+
+            let html = `
+            <h3>${ question }</h3> 
+            <ol>`
+
+            options.forEach((option, ind) => {
+                html += `<li onclick=validate(${index},${ind})>${ option }</li>`
+            })
+            html += `</ol>`
+
+            quizTab.innerHTML = html;
+        }
+
+        const validate = (index, chosenOption) => {
+            const { correctAnswer } = content[index];
+            if(correctAnswer == chosenOption) return alert("CORRECT ANSWER");
+            return alert("WRONG ANSWER ;(");
+        }
+    </script>
+</body>
+</html>
