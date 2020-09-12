@@ -10,4 +10,7 @@ After the database configuration you just have to run the Dockerfile or use:
 ```npm i --save-dev in the terminal```
 ```node index```
 
+To view the documentation type in the terminal
+```npx serve```
+
 
